@@ -9,6 +9,7 @@ var codes = require('./codes.js')
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var coinbase = require('./routes/coinbase');
 
 var app = express();
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/coinbase', coinbase);
 app.use('/users', users);
 
 /// catch 404 and forward to error handler
