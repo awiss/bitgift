@@ -12,11 +12,11 @@ function toAmount(amount){
   return (amount/100).toFixed(2);
 }
 
-router.get('/', function(req, res) {
-  var tokens = JSON.parse(req.query.tokens);
-  var amount = parseInt(req.query.amount); // in cents
-  var site = req.query.site;
-  var code_arr = codes.getCodes(amount, site, True);
+router.post('/', function(req, res) {
+  var tokens = req.body.tokens;
+  var amount = req.body.amount; // in cents
+  var site = req.body.site;
+  var code_arr = codes.getCodes(amount, site);
 
   if (code_arr.length < 0){
     res.send('fucked up shit');
@@ -27,16 +27,17 @@ router.get('/', function(req, res) {
     'transaction': {
       'access_token': tokens.access_token,
       'to': 'nicholasmeyer@gmail.com',
-      'amount_string': toAmount(Math.ceil(amount/100)*100),
+      'amount_string': ".01", // toAmount(Math.ceil(amount/100)*100),
       'amount_currency_iso': 'USD'
     }
   };
 
-  console.log(post_data)
+  console.log(post_data);
+  console.log(tokens.access_token);
 
   request.post('https://coinbase.com/api/v1/transactions/send_money?access_token=' + tokens.access_token, {form:post_data}, function(error, response, body){
     if (response.statusCode == 200){
-      res.send(JSON.stringify({codes: code_arr, tokens:JSON.stringify(tokens)}));
+      res.json({codes: code_arr, tokens:tokens});
     }
     else if (response.statusCode == 401){
       var client_id = process.env.COINBASE_CLIENT_ID;
@@ -48,7 +49,7 @@ router.get('/', function(req, res) {
         if (response.statusCode == 200){
           tokens.access_token = JSON.parse(body).access_token;
           tokens.refresh_token = JSON.parse(body).refresh_token;
-          res.send(JSON.stringify({codes: code_arr, tokens:JSON.stringify(tokens)}));
+          res.json({codes: code_arr, tokens:tokens});
         }
         else {
           res.send('error');
