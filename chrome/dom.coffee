@@ -49,6 +49,7 @@ window.get_amount = ->
   return grand_total[1..]
 
 window.hide_gift_card_fields = ->
-  $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden')
+  # $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden')
+  # inject a style in amazon.css that hides that bitch
 
   $('td:contains(Gift Card:)').text('Bitcoin:')
