@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
   request.post(url, function(error, response, body){
     access_token = JSON.parse(body).access_token
     console.log(access_token)
-    var response = "<!DOCTYPE html><html><head><script>window.postMessage('" + access_token + "');</script></head><body>" + access_token + "</body></html>";
+    var response = "<!DOCTYPE html><html><head><script>window.opener.postMessage('" + access_token + "', '*');</script></head><body>" + access_token + "</body></html>";
     res.send(response);
   });
 });
