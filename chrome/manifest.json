@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "BitGift",
+  "description": "Pay for everything with Bitcoin",
+  "version": "0.1",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["https://www.amazon.com/gp/buy/*"],
+      "css": [],
+      "js": ["jquery.min.js", "store.js"]
+    }
+  ]
+}
