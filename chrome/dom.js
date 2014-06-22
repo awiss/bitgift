@@ -9,8 +9,10 @@
   };
 
   gift_card_loading = function() {
-    var m, messages, _i, _len;
-    messages = $('#addGiftCardOrPromo_Unknown').parent().find('p').toArray();
+    var error_messages, m, messages, success_messages, _i, _len;
+    error_messages = $('#addGiftCardOrPromo_Unknown').parent().find('p').toArray();
+    success_messages = $('#gc-promo-success').find('p').toArray();
+    messages = error_messages.concat(success_messages);
     for (_i = 0, _len = messages.length; _i < _len; _i++) {
       m = messages[_i];
       console.log(m.style.display);

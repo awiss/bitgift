@@ -10,7 +10,9 @@ window.add_bitbuy_button = ->
   $('.place-order-button-link').after AMAZON_BITBUY_BUTTON
 
 gift_card_loading = ->
-  messages = $('#addGiftCardOrPromo_Unknown').parent().find('p').toArray()
+  error_messages = $('#addGiftCardOrPromo_Unknown').parent().find('p').toArray()
+  success_messages = $('#gc-promo-success').find('p').toArray()
+  messages = error_messages.concat(success_messages)
   for m in messages
     console.log m.style.display
     unless m.style.display == "none"
