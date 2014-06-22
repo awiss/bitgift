@@ -60,6 +60,13 @@
   };
 
   window.hide_gift_card_fields = function() {
+    var style;
+    $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden');
+    style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.type = 'text/css';
+    style.href = chrome.extension.getURL('amazon.css');
+    (document.head || document.documentElement).appendChild(style);
     return $('td:contains(Gift Card:)').text('Bitcoin:');
   };
 

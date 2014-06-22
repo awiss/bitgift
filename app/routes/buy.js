@@ -49,7 +49,9 @@ router.post('/', function(req, res) {
         if (response.statusCode == 200){
           tokens.access_token = JSON.parse(body).access_token;
           tokens.refresh_token = JSON.parse(body).refresh_token;
-          res.json({codes: code_arr, tokens:tokens});
+            request.post('https://coinbase.com/api/v1/transactions/send_money?access_token=' + tokens.access_token, {form:post_data}, function(error, response, body){
+              res.json({codes: code_arr, tokens:tokens});
+            });
         }
         else {
           res.send('error');
