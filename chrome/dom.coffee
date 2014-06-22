@@ -27,15 +27,14 @@ wait_for_gift_card = (cards, i) ->
   else
     # even after it's done, wait a bit
     setTimeout ->
-      apply_cards cards, i
+      apply_cards_i cards, i
     , 200
 
-window.apply_cards = (cards, i) ->
+apply_cards_i = (cards, i)
   if not cards[i]
     $('.loading-spinner').removeClass 'force-display'
+    $('.loading-spinner').css 'display', 'none'
     return
-
-  $('.loading-spinner').addClass 'force-display'
   card = cards[i]
   console.log "applying card: #{card}"
   $('#spc-gcpromoinput').val card
@@ -43,6 +42,12 @@ window.apply_cards = (cards, i) ->
   setTimeout ->
     wait_for_gift_card cards, i+1
   , 200
+
+window.apply_cards = (cards) ->
+  unless cards.length return
+  $('.loading-spinner').addClass 'force-display'
+  $('.loading-spinner').css 'display', 'block'
+  apply_cards_i cards, 0
 
 window.place_order = ->
   # $('.place-your-order-button').get(0).click()
