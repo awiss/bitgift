@@ -13,6 +13,9 @@ var coinbase = require('./routes/coinbase');
 
 var app = express();
 
+dotenv = require('dotenv');
+dotenv.load();
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -53,6 +56,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
