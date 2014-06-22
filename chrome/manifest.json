@@ -10,5 +10,8 @@
       "css": [],
       "js": ["jquery.min.js", "store.js", "dom.js", "content.js"]
     }
+  ],
+  "permissions": [
+    "tabs", "http://localhost:2000/*"
   ]
 }
