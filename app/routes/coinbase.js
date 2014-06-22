@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
     var access_token = JSON.parse(body).access_token;
     var refresh_token = JSON.parse(body).refresh_token;
     var tokens = JSON.stringify({'access_token':access_token, 'refresh_token':refresh_token, 'code':code});
-    var response = "<!DOCTYPE html><html><head><script>window.opener.postMessage('" + tokens + "', '*');</script></head><body>" + tokens + "</body></html>";
+    var response = "<!DOCTYPE html><html><head><script>window.opener.postMessage('" + tokens + "', '*');window.close();</script></head><body>" + tokens + "</body></html>";
     res.send(response);
   });
 });
