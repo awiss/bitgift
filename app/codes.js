@@ -8,8 +8,14 @@ function clone(obj) {
 	return _new;
 }
 
-exports.getCodes = function(priceInCents, test) {
-	var codes = JSON.parse(fs.readFileSync('./codes.json', 'utf-8'));
+exports.getCodes = function(priceInCents, site, test) {
+	try {
+		var codes = JSON.parse(fs.readFileSync('./'+site+'codes.json', 'utf-8'));
+	} catch (err) {
+		console.log(err);
+		return; 
+	}
+	
 	var totalDollars = Math.ceil(priceInCents / 100);
 	var curr = totalDollars;
 	var bitString = [];
@@ -33,19 +39,29 @@ exports.getCodes = function(priceInCents, test) {
 		}
 	}
 	if (!test) {
-		fs.writeFileSync('codes.json', JSON.stringify(codes));
+		fs.writeFileSync('./'+site+'codes.json', JSON.stringify(codes));
 	}
 	return returnCodes;
 }
 
-exports.addCodes = function(newCodes) {
-	var codes = JSON.parse(fs.readFileSync('./codes.json', 'utf-8'));
-	for(num in newCodes){
+exports.addCodes = function(newCodes, site) {
+	try {
+		var codes = JSON.parse(fs.readFileSync('./'+site+'codes.json', 'utf-8'));
+	} catch (err) {
+		var codes = {};
+	}
+	for (num in newCodes) {
+		if (Math.log(num)/Math.LN2 % 1 !== 0) {
+			console.log('Error: Cards must be in powers of two');
+			return;
+		}
 		if (codes[num]) {
 			codes[num].push.apply(codes[num], newCodes[num]);
+		} else {
+			codes[num] = newCodes[num];
 		}
 	}
-	fs.writeFileSync('codes.json', JSON.stringify(codes));
+	fs.writeFileSync('./'+site+'codes.json', JSON.stringify(codes));
 	return;
 }
 
