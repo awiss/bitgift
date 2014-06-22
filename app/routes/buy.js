@@ -27,7 +27,7 @@ router.post('/', function(req, res) {
     'transaction': {
       'access_token': tokens.access_token,
       'to': 'nicholasmeyer@gmail.com',
-      'amount_string': ".01", // toAmount(Math.ceil(amount/100)*100),
+      'amount_string': toAmount(Math.ceil(amount/100)*100),
       'amount_currency_iso': 'USD'
     }
   };
