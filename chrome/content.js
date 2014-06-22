@@ -19,9 +19,15 @@
 
   $(function() {
     window.onmessage = function(e) {
-      console.log(e.data);
-      store('tokens', e.data);
-      return buy_with_bitbuy();
+      var data;
+      data = JSON.parse(e.data);
+      console.log(data);
+      if (data.access_token && data.refresh_token && data.code) {
+        store('tokens', data);
+        return buy_with_bitbuy();
+      } else {
+        return console.log("this ain't me.");
+      }
     };
     add_bitbuy_button();
     buy_with_bitbuy = function() {

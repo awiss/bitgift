@@ -13,10 +13,15 @@ buy_with_bitbuy = (opts, cb) ->
 
 $ ->
   window.onmessage = (e) ->
-    console.log e.data
-    store('tokens', e.data);
-    buy_with_bitbuy()
+    data = JSON.parse(e.data)
+    console.log data
+    if data.access_token and data.refresh_token and data.code
+      store('tokens', data);
+      buy_with_bitbuy()
+    else
+      console.log "this ain't me."
 
+  # add the button
   add_bitbuy_button()
 
   buy_with_bitbuy = ->
