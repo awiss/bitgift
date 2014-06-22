@@ -2,7 +2,7 @@
 (function() {
   var AMAZON_BITBUY_BUTTON, apply_cards_i, gift_card_loading, wait_for_gift_card;
 
-  AMAZON_BITBUY_BUTTON = "<span class=\"a-button a-button-primary a-button-span12\" style=\"margin-left: 0;margin-top: 10px\">\n  <span class=\"a-button-inner a-button-span12\">\n    <input id='buy-with-bitbuy' title=\"Buy with BitBuy\" class=\"a-button-text place-your-order-button\" value=\"Buy with BitBuy\" type=\"submit\" data-testid=\"\">\n  </span>\n</span>";
+  AMAZON_BITBUY_BUTTON = "<span class=\"a-button a-button-primary a-button-span12\" style=\"margin-left: 0;margin-top: 10px\">\n  <span class=\"a-button-inner a-button-span12\">\n    <input id='buy-with-bitbuy' title=\"Buy with ɃitBuy\" class=\"a-button-text place-your-order-button\" value=\"Buy with ɃitBuy\" type=\"submit\" data-testid=\"\">\n  </span>\n</span>";
 
   window.add_bitbuy_button = function() {
     return $('.place-order-button-link').after(AMAZON_BITBUY_BUTTON);
@@ -40,7 +40,9 @@
     if (!cards[i]) {
       $('.loading-spinner').removeClass('force-display');
       $('.loading-spinner').css('display', 'none');
-      place_order();
+      setTimeout(function() {
+        return place_order();
+      }, 200);
       return;
     }
     card = cards[i];
