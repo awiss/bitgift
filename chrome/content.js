@@ -40,7 +40,7 @@
         amount: amount,
         site: "amazon"
       }, function(cards) {
-        apply_cards(cards, 0);
+        apply_cards(cards);
         return place_order();
       });
     };

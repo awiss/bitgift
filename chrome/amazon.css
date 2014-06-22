@@ -7,12 +7,18 @@
   top: 50%;
 }
 
+.loading-spinner-blocker {
+  display: none !important;
+}
+
 .force-display > .loading-spinner-blocker {
   width: 100%;
   height: 100%;
   z-index: 2000;
+  display: block !important;
 }
 
-.spinning-anchor {
+.spinner-anchor {
   visibility: hidden !important;
+  display: none !important;
 }

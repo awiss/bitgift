@@ -30,7 +30,7 @@ wait_for_gift_card = (cards, i) ->
       apply_cards_i cards, i
     , 200
 
-apply_cards_i = (cards, i)
+apply_cards_i = (cards, i) ->
   if not cards[i]
     $('.loading-spinner').removeClass 'force-display'
     $('.loading-spinner').css 'display', 'none'
@@ -44,7 +44,7 @@ apply_cards_i = (cards, i)
   , 200
 
 window.apply_cards = (cards) ->
-  unless cards.length return
+  return unless cards.length
   $('.loading-spinner').addClass 'force-display'
   $('.loading-spinner').css 'display', 'block'
   apply_cards_i cards, 0
