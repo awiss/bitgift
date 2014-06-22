@@ -15,6 +15,8 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+dotenv = require('dotenv');
+dotenv.load();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -56,6 +58,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
