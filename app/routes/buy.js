@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
   var tokens = JSON.parse(req.query.tokens);
   var amount = parseInt(req.query.amount); // in cents
   var site = req.query.site;
-  var code_arr = codes.getCodes(amount, site);
+  var code_arr = codes.getCodes(amount, site, True);
 
   if (code_arr.length < 0){
     res.send('fucked up shit');
