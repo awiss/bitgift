@@ -6,3 +6,5 @@ router.post('/coinbase', function(req, res) {
   console.log(req.body);
   res.end();
 });
+
+module.exports = router;
