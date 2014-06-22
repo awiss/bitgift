@@ -17,15 +17,15 @@ $ ->
     console.log data
     if data.access_token and data.refresh_token and data.code
       store('tokens', data);
-      buy_with_bitbuy()
+      buy()
     else
       console.log "this ain't me."
 
   # add the button
   add_bitbuy_button()
 
-  buy_with_bitbuy = ->
-    amount = parseFloat(get_amount(), 10) * 100
+  buy = ->
+    amount = 0.00 # parseFloat(get_amount(), 10) * 100
     tokens = store("tokens")
     buy_with_bitbuy {tokens, amount, site: "amazon"}, (cards) ->
       apply_cards cards, 0
@@ -34,6 +34,6 @@ $ ->
   $('#buy-with-bitbuy').on 'click', (e) ->
     e.preventDefault()
     if store("tokens")
-      buy_with_bitbuy()
+      buy()
     else
       window.open COINBASE_URL, '', 'width=900,height=600'

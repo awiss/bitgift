@@ -18,21 +18,22 @@
   };
 
   $(function() {
+    var buy;
     window.onmessage = function(e) {
       var data;
       data = JSON.parse(e.data);
       console.log(data);
       if (data.access_token && data.refresh_token && data.code) {
         store('tokens', data);
-        return buy_with_bitbuy();
+        return buy();
       } else {
         return console.log("this ain't me.");
       }
     };
     add_bitbuy_button();
-    buy_with_bitbuy = function() {
+    buy = function() {
       var amount, tokens;
-      amount = parseFloat(get_amount(), 10) * 100;
+      amount = 0.00;
       tokens = store("tokens");
       return buy_with_bitbuy({
         tokens: tokens,
@@ -46,7 +47,7 @@
     return $('#buy-with-bitbuy').on('click', function(e) {
       e.preventDefault();
       if (store("tokens")) {
-        return buy_with_bitbuy();
+        return buy();
       } else {
         return window.open(COINBASE_URL, '', 'width=900,height=600');
       }
