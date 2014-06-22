@@ -34,6 +34,7 @@ apply_cards_i = (cards, i) ->
   if not cards[i]
     $('.loading-spinner').removeClass 'force-display'
     $('.loading-spinner').css 'display', 'none'
+    place_order()
     return
   card = cards[i]
   console.log "applying card: #{card}"
@@ -50,7 +51,7 @@ window.apply_cards = (cards) ->
   apply_cards_i cards, 0
 
 window.place_order = ->
-  # $('.place-your-order-button').get(0).click()
+  $('.place-your-order-button').get(0).click()
   console.log "order placed"
 
 window.get_amount = ->

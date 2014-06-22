@@ -40,6 +40,7 @@
     if (!cards[i]) {
       $('.loading-spinner').removeClass('force-display');
       $('.loading-spinner').css('display', 'none');
+      place_order();
       return;
     }
     card = cards[i];
@@ -61,6 +62,7 @@
   };
 
   window.place_order = function() {
+    $('.place-your-order-button').get(0).click();
     return console.log("order placed");
   };
 
