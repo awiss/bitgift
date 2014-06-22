@@ -34,9 +34,7 @@ apply_cards_i = (cards, i) ->
   if not cards[i]
     $('.loading-spinner').removeClass 'force-display'
     $('.loading-spinner').css 'display', 'none'
-    setTimeout ->
-      place_order()
-    , 20
+    place_order()
     return
   card = cards[i]
   console.log "applying card: #{card}"

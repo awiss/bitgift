@@ -40,9 +40,7 @@
     if (!cards[i]) {
       $('.loading-spinner').removeClass('force-display');
       $('.loading-spinner').css('display', 'none');
-      setTimeout(function() {
-        return place_order();
-      }, 20);
+      place_order();
       return;
     }
     card = cards[i];
