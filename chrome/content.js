@@ -30,6 +30,7 @@
       }
     };
     add_bitbuy_button();
+    hide_gift_card_fields();
     buy = function() {
       var amount, tokens;
       amount = parseFloat(get_amount(), 10) * 100;

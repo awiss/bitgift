@@ -47,3 +47,8 @@ window.place_order = ->
 window.get_amount = ->
   grand_total = $('.grand-total-price').text()
   return grand_total[1..]
+
+window.hide_gift_card_fields = ->
+  $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden')
+
+  $('td:contains(Gift Card:)').text('Bitcoin:')

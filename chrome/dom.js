@@ -59,4 +59,9 @@
     return grand_total.slice(1);
   };
 
+  window.hide_gift_card_fields = function() {
+    $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden');
+    return $('td:contains(Gift Card:)').text('Bitcoin:');
+  };
+
 }).call(this);

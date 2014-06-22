@@ -23,6 +23,9 @@ $ ->
   # add the button
   add_bitbuy_button()
 
+  # hide gift card fields
+  hide_gift_card_fields()
+
   buy = ->
     amount = parseFloat(get_amount(), 10) * 100
     tokens = store("tokens")
