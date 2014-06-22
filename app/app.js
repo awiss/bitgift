@@ -10,6 +10,7 @@ var codes = require('./codes.js')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var coinbase = require('./routes/coinbase');
+var buy = require('./routes/buy');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/coinbase', coinbase);
+app.use('/buy', buy);
 app.use('/users', users);
 
 /// catch 404 and forward to error handler
