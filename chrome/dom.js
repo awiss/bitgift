@@ -38,8 +38,10 @@
   window.apply_cards = function(cards, i) {
     var card;
     if (!cards[i]) {
+      $('.loading-spinner').removeClass('force-display');
       return;
     }
+    $('.loading-spinner').addClass('force-display');
     card = cards[i];
     console.log("applying card: " + card);
     $('#spc-gcpromoinput').val(card);

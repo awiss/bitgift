@@ -31,7 +31,11 @@ wait_for_gift_card = (cards, i) ->
     , 200
 
 window.apply_cards = (cards, i) ->
-  return unless cards[i]
+  if not cards[i]
+    $('.loading-spinner').removeClass 'force-display'
+    return
+
+  $('.loading-spinner').addClass 'force-display'
   card = cards[i]
   console.log "applying card: #{card}"
   $('#spc-gcpromoinput').val card

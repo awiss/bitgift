@@ -1,3 +1,16 @@
 #spc-top > div > div.a-span-last > div > div.a-span-last {
   visibility: hidden !important;
 }
+
+.loading-spinner-inner {
+  left: 50%;
+  top: 50%;
+}
+
+.force-display {
+  display: block !important;
+}
+
+.spinning-anchor {
+  visibility: hidden !important;
+}
