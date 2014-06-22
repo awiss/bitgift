@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
 require 'watir-webdriver'
 require 'net/http'
-require 'url'
+require 'uri'
+require 'openssl'
+require 'json'
+require 'mail'
 
+@size = 0
 ARGV.each do|a|
+  @size += 1
   browser = Watir::Browser.new :firefox
   browser.goto "https://www.amazon.com/gp/product/B004LLIKVU/gcrnsts?ie=UTF8&qid=1403408127&ref_=sr_1_1&s=gift-cards&sr=1-1"
   browser.text_field(:name => 'amount').set("#{a}")
@@ -25,10 +30,33 @@ ARGV.each do|a|
   browser.close
 end
 
-url=URI.parse("https://api.runscope.com/buckets/1htmleryg16r/captures")
-req.NET::HTTP::Get.new(url.path)
-req.add_field("Authorization", "Bearer 6ce43f53-7e00-4da4-a63c-f54a90b1f4de")
-res = Net::HTTP.new(url.host, url.port).start do |http|
-  http.request(req)
+@array = Array.new
+sleep 6
+uri = URI.parse("https://api.runscope.com")
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+request = Net::HTTP::Get.new("/buckets/1htmleryg16r/captures")
+request.add_field('Authorization', "Bearer 6ce43f53-7e00-4da4-a63c-f54a90b1f4de")
+response = http.request(request)
+responses = JSON.parse(response.body)
+responses['data'].each do |a|
+  uuid = a["uuid"]
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  request = Net::HTTP::Get.new("/buckets/1htmleryg16r/messages/" + uuid)
+  request.add_field('Authorization', "Bearer 6ce43f53-7e00-4da4-a63c-f54a90b1f4de")
+  response = http.request(request)
+  response_body = JSON.parse(response.body)
+  email_body = response_body['data']['response']['body']
+  decoded = URI.unescape(email_body)
+  if match_groups = decoded.match(/Amount\: \$(\d+\.\d+).*Claim code ([A-Z0-9]{4}-[A-Z0-9]{6}-[A-Z0-9]{4})/)
+    one, two = match_groups.captures 
+    test = {one => two}
+    @array << test
+  end
 end
-puts res.body
+@array.each do |(a,b)|
+  puts "Purchased a gift code with claim code #{a}."
+end

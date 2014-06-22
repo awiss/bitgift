@@ -1,12 +1,5 @@
 var fs = require('fs');
-
-function clone(obj) {
-	var _new = {};
-	for(x in obj){
-		_new[x] = obj[x];
-	}
-	return _new;
-}
+var exec = require('child_process').exec;
 
 exports.getCodes = function(priceInCents, site, test) {
 	try {
@@ -24,6 +17,7 @@ exports.getCodes = function(priceInCents, site, test) {
 		bitString.push(bit);
 		curr = Math.floor(curr/2);
 	}
+	var dollarVals = [];
 	var returnCodes = [];
 	for (var i = bitString.length-1; i > -1; i--) {
 		if (bitString[i]) {
@@ -35,11 +29,24 @@ exports.getCodes = function(priceInCents, site, test) {
 				return [];
 			}
 			bitString[i-1] += diff*2;
+			for (var j = 0; j < arr.length; j++) {
+				dollarVals.push(pow);
+			}
 			returnCodes.push.apply(returnCodes, arr);		
 		}
 	}
+	var call = 'ruby ../scripts/buy_gift_cards.rb';
+	for(var i = 0; i < dollarVals.length; i++) {
+		call += ' "'+dollarVals[i]+'"';
+	}
+	console.log(call);
 	if (!test) {
 		fs.writeFileSync('./'+site+'codes.json', JSON.stringify(codes));
+		var child = exec(call, function(error, stdout, stderror) {
+			console.log(stdout);
+			//exports.addCodes(stdout);
+		});
+		
 	}
 	return returnCodes;
 }
@@ -64,4 +71,5 @@ exports.addCodes = function(newCodes, site) {
 	fs.writeFileSync('./'+site+'codes.json', JSON.stringify(codes));
 	return;
 }
+
 

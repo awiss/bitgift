@@ -1,7 +1,7 @@
 AMAZON_BITBUY_BUTTON = """
 <span class="a-button a-button-primary a-button-span12" style="margin-left: 0;margin-top: 10px">
   <span class="a-button-inner a-button-span12">
-    <input id='buy-with-bitbuy' title="Buy with BitBuy" class="a-button-text place-your-order-button" value="Buy with BitBuy" type="submit" data-testid="">
+    <input id='buy-with-bitbuy' title="Buy with ɃitBuy" class="a-button-text place-your-order-button" value="Buy with ɃitBuy" type="submit" data-testid="">
   </span>
 </span>
 """
@@ -27,11 +27,15 @@ wait_for_gift_card = (cards, i) ->
   else
     # even after it's done, wait a bit
     setTimeout ->
-      apply_cards cards, i
+      apply_cards_i cards, i
     , 200
 
-window.apply_cards = (cards, i) ->
-  return unless cards[i]
+apply_cards_i = (cards, i) ->
+  if not cards[i]
+    $('.loading-spinner').removeClass 'force-display'
+    $('.loading-spinner').css 'display', 'none'
+    place_order()
+    return
   card = cards[i]
   console.log "applying card: #{card}"
   $('#spc-gcpromoinput').val card
@@ -40,8 +44,14 @@ window.apply_cards = (cards, i) ->
     wait_for_gift_card cards, i+1
   , 200
 
+window.apply_cards = (cards) ->
+  return unless cards.length
+  $('.loading-spinner').addClass 'force-display'
+  $('.loading-spinner').css 'display', 'block'
+  apply_cards_i cards, 0
+
 window.place_order = ->
-  # $('.place-your-order-button').get(0).click()
+  $('.place-your-order-button').get(0).click()
   console.log "order placed"
 
 window.get_amount = ->
@@ -49,7 +59,12 @@ window.get_amount = ->
   return grand_total[1..]
 
 window.hide_gift_card_fields = ->
-  # $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden')
+  $('strong:contains(Gift cards)').parent().parent().parent().parent().css('visibility', 'hidden')
   # inject a style in amazon.css that hides that bitch
+  style = document.createElement 'link'
+  style.rel = 'stylesheet'
+  style.type = 'text/css'
+  style.href = chrome.extension.getURL 'amazon.css'
+  (document.head||document.documentElement).appendChild style
 
   $('td:contains(Gift Card:)').text('Bitcoin:')
