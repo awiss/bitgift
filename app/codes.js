@@ -1,35 +1,51 @@
-var codes = {
-    1: ['373X-GE4EB8-KHZZ', '59JH-3YDAFS-54YM', '7CUJ-MLL89T-FXA6', 'CLF3-Q9M4R6-58TV', 'DZS9-EH4SD3-E835'],
-    2: ['LCLQ-SM6E8D-Z7L8', 'V8YC-T6ULKL-98HD'],
-    4: ['AFE9-WY9N8Y-2WKW'],
-    8: [],
-    16: []
+var fs = require('fs');
+
+function clone(obj) {
+	var _new = {};
+	for(x in obj){
+		_new[x] = obj[x];
+	}
+	return _new;
 }
 
-
-exports.getCodes = function(priceInCents) {
-	var totalDollars = priceInCents / 100;
-	totalDollars += priceInCents % 100 ? 1 : 0;
+exports.getCodes = function(priceInCents, test) {
+	var codes = JSON.parse(fs.readFileSync('./codes.json', 'utf-8'));
+	var totalDollars = Math.ceil(priceInCents / 100);
 	var curr = totalDollars;
-	var bitString = '';
+	var bitString = [];
 	while (curr > 0) {
 		var bit = curr % 2;
-		bitString = '' + bit + bitString;
+		bitString.push(bit);
 		curr = Math.floor(curr/2);
 	}
-	var returnCodes;
-	for (var i = 0; i < bitString.length; i++) {
-		if (bitString === '1') {
-			returnCodes.push.apply(returnCodes,(codes[2^i].splice(0,1)));
+	var returnCodes = [];
+	for (var i = bitString.length-1; i > -1; i--) {
+		if (bitString[i]) {
+			var pow = Math.pow(2,i).toString();
+			codes[pow] = codes[pow] || [];
+			arr = codes[pow].splice(0, bitString[i]);
+			var diff = bitString[i] - arr.length;
+			if (i === 0 && diff) {
+				return [];
+			}
+			bitString[i-1] += diff*2;
+			returnCodes.push.apply(returnCodes, arr);		
 		}
+	}
+	if (!test) {
+		fs.writeFileSync('codes.json', JSON.stringify(codes));
 	}
 	return returnCodes;
 }
 
-exports.addCodes = function(newCodes){
+exports.addCodes = function(newCodes) {
+	var codes = JSON.parse(fs.readFileSync('./codes.json', 'utf-8'));
 	for(num in newCodes){
 		if (codes[num]) {
 			codes[num].push.apply(codes[num], newCodes[num]);
 		}
 	}
+	fs.writeFileSync('codes.json', JSON.stringify(codes));
+	return;
 }
+

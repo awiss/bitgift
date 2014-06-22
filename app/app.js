@@ -14,6 +14,8 @@ var buy = require('./routes/buy');
 
 var app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 dotenv = require('dotenv');
 dotenv.load();
 
