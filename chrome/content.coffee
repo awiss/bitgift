@@ -25,7 +25,7 @@ $ ->
   add_bitbuy_button()
 
   buy = ->
-    amount = 0.00 # parseFloat(get_amount(), 10) * 100
+    amount = parseFloat(get_amount(), 10) * 100
     tokens = store("tokens")
     buy_with_bitbuy {tokens, amount, site: "amazon"}, (cards) ->
       apply_cards cards, 0

@@ -33,7 +33,7 @@
     add_bitbuy_button();
     buy = function() {
       var amount, tokens;
-      amount = 0.00;
+      amount = parseFloat(get_amount(), 10) * 100;
       tokens = store("tokens");
       return buy_with_bitbuy({
         tokens: tokens,
