@@ -31,7 +31,6 @@ $ ->
     tokens = store("tokens")
     buy_with_bitbuy {tokens, amount, site: "amazon"}, (cards) ->
       apply_cards cards
-      place_order()
 
   $('#buy-with-bitbuy').on 'click', (e) ->
     e.preventDefault()

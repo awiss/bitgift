@@ -40,8 +40,7 @@
         amount: amount,
         site: "amazon"
       }, function(cards) {
-        apply_cards(cards);
-        return place_order();
+        return apply_cards(cards);
       });
     };
     return $('#buy-with-bitbuy').on('click', function(e) {
