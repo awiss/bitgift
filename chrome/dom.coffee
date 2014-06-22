@@ -36,7 +36,7 @@ apply_cards_i = (cards, i) ->
     $('.loading-spinner').css 'display', 'none'
     setTimeout ->
       place_order()
-    , 200
+    , 20
     return
   card = cards[i]
   console.log "applying card: #{card}"

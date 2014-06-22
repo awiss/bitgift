@@ -42,7 +42,7 @@
       $('.loading-spinner').css('display', 'none');
       setTimeout(function() {
         return place_order();
-      }, 200);
+      }, 20);
       return;
     }
     card = cards[i];
