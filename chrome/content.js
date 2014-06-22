@@ -9,7 +9,6 @@
   buy_with_bitbuy = function(opts, cb) {
     return $.post('http://localhost:2000/buy', opts, function(data) {
       var codes, tokens;
-      data = JSON.parse(data);
       tokens = data.tokens;
       store("tokens", tokens);
       codes = data.codes;

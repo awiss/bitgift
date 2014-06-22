@@ -4,7 +4,6 @@ COINBASE_URL = "https://coinbase.com/oauth/authorize?response_type=code&client_i
 
 buy_with_bitbuy = (opts, cb) ->
   $.post 'http://localhost:2000/buy', opts, (data) ->
-    data = JSON.parse(data)
     tokens = data.tokens
     store("tokens", tokens)
 
